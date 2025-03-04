@@ -658,7 +658,8 @@ process mergeBams {
     input: tuple val(meta), path("input_bams/reads*.bam"), path("input_bams/reads*.bam.bai")
     output: tuple val(meta), path("reads.bam"), path("reads.bam.bai")
     script:
-    def merge_threads = Math.max(1, task.cpus - 1)
+    //def merge_threads = Math.max(1, task.cpus - 1)
+    def merge_threads = 60
     """
     samtools merge -@ ${merge_threads} \
         -c -b <(find input_bams -name 'reads*.bam' | sort) --write-index -o reads.bam##idx##reads.bam.bai
@@ -675,7 +676,8 @@ process catSortBams {
     input: tuple val(meta), path("input_bams/reads*.bam")
     output: tuple val(meta), path("reads.bam"), path("reads.bam.bai")
     script:
-    def sort_threads = Math.max(1, task.cpus - 2)
+    //def sort_threads = Math.max(1, task.cpus - 2)
+    def sort_threads = 60
     """
     samtools cat -b <(find input_bams -name 'reads*.bam' | sort) \
     | samtools sort - -@ ${sort_threads} --write-index -o reads.bam##idx##reads.bam.bai
@@ -691,7 +693,8 @@ process sortBam {
     input: tuple val(meta), path("reads.bam")
     output: tuple val(meta), path("reads.sorted.bam"), path("reads.sorted.bam.bai")
     script:
-    def sort_threads = Math.max(1, task.cpus - 1)
+    //def sort_threads = Math.max(1, task.cpus - 1)
+    def sort_threads = 60
     """
     samtools sort --write-index -@ ${sort_threads} reads.bam -o reads.sorted.bam##idx##reads.sorted.bam.bai
     """
@@ -712,7 +715,8 @@ process bamstats {
               path("reads.bam.bai"),
               path("bamstats_results")
     script:
-        def bamstats_threads = Math.max(1, task.cpus - 1)
+        //def bamstats_threads = Math.max(1, task.cpus - 1)
+        def bamstats_threads = 60
         def per_read_stats_arg = bsargs["per_read_stats"] ? "| bgzip > bamstats_results/bamstats.readstats.tsv.gz" : " > /dev/null"
     """
     mkdir bamstats_results
