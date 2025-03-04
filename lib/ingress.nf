@@ -652,7 +652,7 @@ process validateIndex {
 // Uses -c to ensure matching RG.IDs across multiple inputs are not unnecessarily modified to avoid collisions.
 process mergeBams {
     label "ingress"
-    label "wf_common"
+    //label "wf_common"
     cpus 61
     memory "120 GB"
     input: tuple val(meta), path("input_bams/reads*.bam"), path("input_bams/reads*.bam.bai")
@@ -670,7 +670,7 @@ process mergeBams {
 // Sort FOFN for samtools cat to ensure samtools sort breaks ties deterministically.
 process catSortBams {
     label "ingress"
-    label "wf_common"
+    //label "wf_common"
     cpus 61
     memory "120 GB"
     input: tuple val(meta), path("input_bams/reads*.bam")
