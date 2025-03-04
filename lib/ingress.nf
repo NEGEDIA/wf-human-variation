@@ -677,10 +677,9 @@ process catSortBams {
     output: tuple val(meta), path("reads.bam"), path("reads.bam.bai")
     script:
     //def sort_threads = Math.max(1, task.cpus - 2)
-    def sort_threads = 60
     """
     samtools cat -b <(find input_bams -name 'reads*.bam' | sort) \
-    | samtools sort - -@ ${sort_threads} --write-index -o reads.bam##idx##reads.bam.bai
+    | samtools sort - -@ 60 --write-index -o reads.bam##idx##reads.bam.bai
     """
 }
 
