@@ -543,8 +543,8 @@ def xam_ingress(Map arguments)
 process fastcat {
     label "ingress"
     label "wf_common"
-    cpus 4
-    memory "2 GB"
+    cpus 60
+    memory "120 GB"
     input:
         tuple val(meta), path(input_src, stageAs: "input_src")
         val fcargs
@@ -653,13 +653,12 @@ process validateIndex {
 process mergeBams {
     label "ingress"
     label "wf_common"
-    cpus 3
-    memory "4 GB"
+    cpus 60
+    memory "120 GB"
     input: tuple val(meta), path("input_bams/reads*.bam"), path("input_bams/reads*.bam.bai")
     output: tuple val(meta), path("reads.bam"), path("reads.bam.bai")
     script:
-    //def merge_threads = Math.max(1, task.cpus - 1)
-    def merge_threads = 60
+    def merge_threads = Math.max(1, task.cpus - 1)
     """
     samtools merge -@ ${merge_threads} \
         -c -b <(find input_bams -name 'reads*.bam' | sort) --write-index -o reads.bam##idx##reads.bam.bai
@@ -671,13 +670,12 @@ process mergeBams {
 process catSortBams {
     label "ingress"
     label "wf_common"
-    cpus 4
-    memory "4 GB"
+    cpus 60
+    memory "120 GB"
     input: tuple val(meta), path("input_bams/reads*.bam")
     output: tuple val(meta), path("reads.bam"), path("reads.bam.bai")
     script:
-    //def sort_threads = Math.max(1, task.cpus - 2)
-    def sort_threads = 60
+    def sort_threads = Math.max(1, task.cpus - 2)
     """
     samtools cat -b <(find input_bams -name 'reads*.bam' | sort) \
     | samtools sort - -@ ${sort_threads} --write-index -o reads.bam##idx##reads.bam.bai
@@ -688,13 +686,12 @@ process catSortBams {
 process sortBam {
     label "ingress"
     label "wf_common"
-    cpus 3
-    memory "4 GB"
+    cpus 60
+    memory "120 GB"
     input: tuple val(meta), path("reads.bam")
     output: tuple val(meta), path("reads.sorted.bam"), path("reads.sorted.bam.bai")
     script:
-    //def sort_threads = Math.max(1, task.cpus - 1)
-    def sort_threads = 60
+    def sort_threads = Math.max(1, task.cpus - 1)
     """
     samtools sort --write-index -@ ${sort_threads} reads.bam -o reads.sorted.bam##idx##reads.sorted.bam.bai
     """
