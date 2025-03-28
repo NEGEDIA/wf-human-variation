@@ -730,27 +730,27 @@
             "properties": {
                 "threads": {
                     "type": "integer",
-                    "default": 4,
+                    "default": 20,
                     "description": "Set max number of threads to use for more intense processes (limited by config executor cpus)"
                 },
                 "ubam_map_threads": {
                     "type": "integer",
-                    "default": 8,
+                    "default": 20,
                     "description": "Set max number of threads to use for aligning reads from uBAM (limited by config executor cpus)"
                 },
                 "ubam_sort_threads": {
                     "type": "integer",
-                    "default": 3,
+                    "default": 20,
                     "description": "Set max number of threads to use for sorting and indexing aligned reads from uBAM (limited by config executor cpus)"
                 },
                 "ubam_bam2fq_threads": {
                     "type": "integer",
-                    "default": 1,
+                    "default": 20,
                     "description": "Set max number of threads to use for uncompressing uBAM and generating FASTQ for alignment (limited by config executor cpus)"
                 },
                 "modkit_threads": {
                     "type": "integer",
-                    "default": 4,
+                    "default": 20,
                     "description": "Total number of threads to use in modkit modified base calling (limited by config executor cpus)"
                 }
             }
