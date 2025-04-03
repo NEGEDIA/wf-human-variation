@@ -28,7 +28,7 @@ process cram_to_bam {
 // Minimap2 mapping
 process minimap2_alignment {
     cpus {params.ubam_map_threads + params.ubam_sort_threads + params.ubam_bam2fq_threads}
-    memory { (32.GB * task.attempt) - 1.GB }
+    memory { (250.GB * task.attempt) - 1.GB }
     maxRetries 1
     errorStrategy = {task.exitStatus in [137,140] ? 'retry' : 'finish'}
     input:
@@ -41,10 +41,10 @@ process minimap2_alignment {
     script:
     """
     samtools reset -x tp,cm,s1,s2,NM,MD,AS,SA,ms,nn,ts,cg,cs,dv,de,rl --no-PG ${reads} -o - \
-        | samtools bam2fq -@ ${params.ubam_bam2fq_threads} -T 1 - \
-        | minimap2 -y -t ${params.ubam_map_threads} -ax map-ont --cap-kalloc 100m --cap-sw-mem 50m \
+        | samtools bam2fq -@ 60 -T 1 - \
+        | minimap2 -y -t 60 -ax map-ont --cap-kalloc 100m --cap-sw-mem 50m \
             ${reference} - \
-        | samtools sort -@ ${params.ubam_sort_threads} \
+        | samtools sort -@ 60 \
             --write-index -o ${params.sample_name}.${align_ext}##idx##${params.sample_name}.${align_ext}.${index_ext} \
             -O ${align_ext} --reference ${reference} -
 
