@@ -5,8 +5,8 @@ import groovy.json.JsonBuilder
 // --input-exclude-flags 2308: Remove unmapped (4), non-primary (256) and supplemental (2048) alignments
 process sniffles2 {
     label "wf_human_sv"
-    cpus params.threads
-    memory 6.GB
+    cpus 50
+    memory 130.GB
     input:
         tuple path(xam), path(xam_idx), val(xam_meta)
         file tr_bed
