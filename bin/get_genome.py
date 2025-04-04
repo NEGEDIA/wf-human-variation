@@ -60,16 +60,37 @@ CHROMOSOME_SIZES = {
         'chr21': '46709983',
         'chr22': '50818468',
         'chrX': '156040895',
-        'chrY': '57227415'}
+        'chrY': '57227415'},
+    'GRCm39': {
+        'chr1': '195154279',
+        'chr2': '181755017',
+        'chr3': '159745316',
+        'chr4': '156860686',
+        'chr5': '151758149',
+        'chr6': '149588044',
+        'chr7': '144995196',
+        'chr8': '130127694',
+        'chr9': '124359700',
+        'chr10': '130530862',
+        'chr11': '121973369',
+        'chr12': '120092757',
+        'chr13': '120883175',
+        'chr14': '125139656',
+        'chr15': '104073951',
+        'chr16': '98008968',
+        'chr17': '95294699',
+        'chr18': '90720763',
+        'chr19': '61420004',
+        'chrX': '169476592',
+        'chrY': '91455967',
+        'chrMT': '16299'}
 }
-
 
 ALLOWED_CHR = [
     "chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
     "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17",
-    "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY"
+    "chr18", "chr19", "chrX", "chrY", "chrMT"
 ]
-
 
 def chromosome_sizes(extracted_sizes):
     """Get dictionary of chromosomes and sizes from samtools index."""
@@ -112,7 +133,7 @@ def check_genome(genome_build, str_flag):
     )
     if not genome_build:
         bad_genome = True
-    elif str_flag and genome_build != "hg38":
+    elif str_flag and genome_build not in ["hg38", "GRCm39"]:
         bad_genome = True
         extra_msg_context = (
             "#####################################################################\n"
