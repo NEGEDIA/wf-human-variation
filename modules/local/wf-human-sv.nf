@@ -30,7 +30,7 @@ process sniffles2 {
             log.warn "Automatically selecting TR BED: ${genome_build}.trf.bed"
             tr_arg = "--tandem-repeats \${WFSV_TRBED_PATH}/${genome_build}.trf.bed"
         }
-        def sniffles_args = params.sniffles_args ? "--sniffles_args ${params.sniffles_args}" : ""
+        def sniffles_args = params.sniffles_args ? "${params.sniffles_args}" : ""
         def min_sv_len = params.min_sv_length ? "--minsvlen ${params.min_sv_length}" : ""
         // Perform internal phasing only if snp not requested; otherwise, use joint phasing.
         def phase = params.phased ? "--phase" : ""
